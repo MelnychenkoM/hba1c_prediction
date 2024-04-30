@@ -56,12 +56,15 @@ def plsr_r2_plot(y_true, y_predicted):
     axs.plot(y_true, y_true, color='k')
     axs.set_xlabel("y true")
     axs.set_ylabel("y predicted")
-    axs.text(3.5, 12, f"$R^2 = {r2:.3f}$\n$R = {r:.3f}$\nRMSE$ = {rmse:.3f}$")
+    plt.text(min(y_true), max(y_predicted), f"$R^2 = {r2:.3f}$\n$R = {r:.3f}$\nRMSE$ = {rmse:.3f}$", verticalalignment='top')
 
     return fig, axs
 
 
 def residual_plot(y_true: np.array, y_predicted: np.array, num_std: int = None):
+    """
+    Plots residuals with std if defined
+    """
 
     residuals = (y_true - y_predicted).to_numpy()
     mean = residuals.mean()
@@ -90,7 +93,7 @@ def calculate_total_iterations(start, end, step_size=1):
 
 
 def print_boxed_output(string, header):
-    """ Print the result inside a nice box."""
+    """ Printed output """
 
     length_string = max(len(line) for line in string.split('\n'))
     length_header = max(len(line) for line in header.split('\n'))

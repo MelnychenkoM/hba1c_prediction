@@ -9,6 +9,7 @@ class VISSA:
      Variable Iterative Space Shrinkage Approach (VISSA) algorith for variable
      selection inspired by Model Population Analysis.
      Original paper: Analyst, 2014,139, 4836-4845
+
     """
     
     def fit(self, X, y, ncomp=5, n_splits=50, num_iter=1, num_samples=2000):
