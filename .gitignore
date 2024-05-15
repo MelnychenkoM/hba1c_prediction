@@ -1,2 +1,5 @@
 /data/
 /voigt/fit/
+/voigt/.ipynb_checkpoints
+/.ipynb_checkpoints/
+/tools/__pycache__/

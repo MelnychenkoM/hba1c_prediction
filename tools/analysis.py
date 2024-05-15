@@ -52,11 +52,11 @@ def plsr_r2_plot(y_true, y_predicted):
     mse = mean_squared_error(y_true, y_predicted)
     rmse = np.sqrt(mse)
 
-    axs.scatter(y_true, y_predicted, facecolor='w', edgecolor='k')
+    axs.scatter(y_true, y_predicted, facecolor='w', edgecolor='k', s=30)
     axs.plot(y_true, y_true, color='k')
     axs.set_xlabel("y true")
     axs.set_ylabel("y predicted")
-    plt.text(min(y_true), max(y_predicted), f"$R^2 = {r2:.3f}$\n$R = {r:.3f}$\nRMSE$ = {rmse:.3f}$", verticalalignment='top')
+    plt.text(min(y_true), max(y_predicted) + 2, f"$R^2 = {r2:.3f}$\n$R = {r:.3f}$\nRMSEP$ = {rmse:.3f}$", verticalalignment='top')
 
     return fig, axs
 
@@ -161,14 +161,14 @@ def plot_number_components(X, y, number_range=(1, 20), cv=5):
     y_cv = np.array(y_cvs)[ncomp]
 
     fig, axs = plt.subplots(2, 2, figsize=(10, 8))
-    axs[0, 0].plot(np.arange(*number_range), r2s, marker='o', color='k')
-    axs[0, 1].plot(np.arange(*number_range), rmses, marker='o', color='k')
+    axs[0, 0].plot(np.arange(*number_range), r2s, marker='o', color='k', markersize=6, markeredgecolor='k', markerfacecolor='w')
+    axs[0, 1].plot(np.arange(*number_range), rmses, marker='o', color='k', markersize=6, markeredgecolor='k', markerfacecolor='w')
     axs[0, 0].set_xlabel("Num of components")
     axs[0, 1].set_xlabel("Num of components")
     axs[0, 0].set_ylabel("$R^2$")
     axs[0, 1].set_ylabel("RMSE")
 
-    axs[1, 0].scatter(y, y_cv, facecolor='w', edgecolor='k')
+    axs[1, 0].scatter(y, y_cv, facecolor='w', edgecolor='k', s=30)
     axs[1, 0].plot(y, y, color='k', linewidth=1.2)
     axs[1, 0].set_xlabel("y true")
     axs[1, 0].set_ylabel("y predicted")
@@ -176,7 +176,7 @@ def plot_number_components(X, y, number_range=(1, 20), cv=5):
     residuals = y - y_cv
     mean_residual = residuals.mean()
     std_residual = residuals.std()
-    axs[1, 1].scatter(np.arange(len(residuals)), residuals, facecolor='w', edgecolor='k')
+    axs[1, 1].scatter(np.arange(len(residuals)), residuals, facecolor='w', edgecolor='k', s=30)
     axs[1, 1].axhline(y=mean_residual, color='k', linestyle='--')
     axs[1, 1].set_xlabel("Sample")
     axs[1, 1].set_ylabel("Residuals")
@@ -264,3 +264,5 @@ def read_spa(filepath):
 def minmax(array: np.array):
     """ minmax sample scaling """
     return (array - array.min()) / (array.max() - array.min())
+
+
