@@ -56,7 +56,7 @@ def plsr_r2_plot(y_true, y_predicted):
     axs.plot(y_true, y_true, color='k')
     axs.set_xlabel("y true")
     axs.set_ylabel("y predicted")
-    plt.text(min(y_true), max(y_predicted) + 2, f"$R^2 = {r2:.3f}$\n$R = {r:.3f}$\nRMSEP$ = {rmse:.3f}$", verticalalignment='top')
+    plt.text(min(y_true), max(y_predicted) + 1, f"$R^2 = {r2:.3f}$\n$R = {r:.3f}$\nRMSEP$ = {rmse:.3f}$", verticalalignment='top')
 
     return fig, axs
 
