@@ -176,11 +176,11 @@ def plot_number_components(X, y, number_range=(1, 20), cv=5):
     residuals = y - y_cv
     mean_residual = residuals.mean()
     std_residual = residuals.std()
-    axs[1, 1].scatter(np.arange(len(residuals)), residuals, facecolor='w', edgecolor='k', s=30)
+    axs[1, 1].scatter(y_cv, residuals, facecolor='w', edgecolor='k', s=30)
     axs[1, 1].axhline(y=mean_residual, color='k', linestyle='--')
-    axs[1, 1].set_xlabel("Sample")
+    axs[1, 1].set_xlabel("y predicted")
     axs[1, 1].set_ylabel("Residuals")
-    axs[1, 1].set_xlim([-5, len(y) + 5])
+    # axs[1, 1].set_xlim([-5, len(y) + 5])
 
     return fig, axs
 
