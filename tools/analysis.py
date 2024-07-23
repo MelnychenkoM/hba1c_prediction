@@ -84,9 +84,7 @@ def residual_plot(y_true: np.array, y_predicted: np.array, num_std: int = None):
         plt.scatter(indices_beyond_std, residuals[indices_beyond_std], edgecolor='r', facecolor='w')
 
         return indices_beyond_std
-    
     return 
-
 
 def calculate_total_iterations(start, end, step_size=1):
     return np.floor((end - start) / step_size)
@@ -259,10 +257,5 @@ def read_spa(filepath):
         Spectra = np.fromfile(f, np.single, Spectrum_Pts)
         
     return np.stack((Wavenumbers, Spectra), axis=1)
-
-
-def minmax(array: np.array):
-    """ minmax sample scaling """
-    return (array - array.min()) / (array.max() - array.min())
 
 

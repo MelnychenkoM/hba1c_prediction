@@ -76,16 +76,22 @@ def fit_pseudo_voigt(x_values, y_values, peaks, fig_show=False, wavenumber=False
     Curve fitting using jaxfit.
     """
     if wavenumber:
-        peaks = [np.where(x_values == value)[0][0] for value in peaks]
+        # peaks_old = [np.where(x_values == peak)[0][0] for peak in peaks]
+        peaks = [np.argmin(np.abs(x_values - peak)) for peak in peaks]
+
     
     bounds, initial_guess = create_params_pseudo_voigt(x_values, y_values, peaks)
     
     jcf = CurveFit()
-    params, pcov = jcf.curve_fit(combined_pseudo_voigt, x_values, y_values, p0=initial_guess, bounds=bounds, ftol=1e-12)
+    params, pcov = jcf.curve_fit(combined_pseudo_voigt,
+                                  x_values, 
+                                  y_values, 
+                                  p0=initial_guess, 
+                                  bounds=bounds)
 
     predicted = combined_pseudo_voigt(x_values, *params)
 
-    sum_of_squares = np.sum((predicted - y_values)**2)
+    discrepancy = np.sqrt(np.mean((predicted - y_values)**2))
     r2 = r2_score(y_values, predicted)
     
     n = len(y_values)
@@ -93,16 +99,18 @@ def fit_pseudo_voigt(x_values, y_values, peaks, fig_show=False, wavenumber=False
     adjusted_r2 = 1 - ((1 - r2) * (n - 1) / (n - k - 1))
     chi_squared = np.sum((predicted - y_values)**2 / y_values)
 
-    print(f"SS: {sum_of_squares:.3e}", 
-          f"R2: {r2:.5f}", 
-          f"adj R2: {adjusted_r2:.5f}",
-         f"chi squared: {chi_squared:.5f}")
+    print(
+        f"DIS: {discrepancy:.3e}", 
+        f"R2: {r2:.5f}", 
+        # f"adj R2: {adjusted_r2:.5f}",
+        # f"chi squared: {chi_squared:.5f}"
+         )
 
     fit_results_text = (
-    f"<b>SS:</b> {sum_of_squares:.3e}<br>"
-    f"<b>R2:</b> {r2:.5f}<br>"
-    f"<b>adj R2:</b> {adjusted_r2:.5f}<br>"
-    f"<b>chi squared:</b> {chi_squared:.5f}"
+        f"<b>DIS:</b> {discrepancy:.5e}<br>"
+        f"<b>R2:</b> {r2:.3f}<br>"
+        # f"<b>adj R2:</b> {adjusted_r2:.5f}<br>"
+        # f"<b>chi squared:</b> {chi_squared:.5f}"
     )
 
     
@@ -196,11 +204,9 @@ def fit_pseudo_voigt(x_values, y_values, peaks, fig_show=False, wavenumber=False
     fit_result = {
         "fit_figure": fig,
         "residuals_figure": fig_residuals,
-        "SS": sum_of_squares,
+        "DIS": discrepancy,
         "R2": r2,
-        "adj R2": adjusted_r2,
-        "chi squared": chi_squared
-    }
+    } 
     
     return params_df, fit_result
 
